@@ -9,6 +9,9 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.Toast;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -18,7 +21,6 @@ import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
 
-    //private String jsonURL = "https://demonuts.com/Demonuts/JsonTest/Tennis/json_parsing.php";
     private String jsonURL = "https://dl.dropboxusercontent.com/s/2iodh4vg0eortkl/facts.json/";
     private final int jsoncode = 1;
     private RecyclerView recyclerView;
@@ -33,10 +35,33 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         recyclerView = findViewById(R.id.recycler);
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         fetchJSON();
 
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // action with ID action_refresh was selected
+            case R.id.action_refresh:
+                fetchJSON();
+                break;
+
+            default:
+                break;
+        }
+
+        return true;
     }
     @SuppressLint("StaticFieldLeak")
     private void fetchJSON(){
